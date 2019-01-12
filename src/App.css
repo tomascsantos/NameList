@@ -1,3 +1,7 @@
+.rushieList {
+    flex-grow: 1;
+}
+
 .App {
   text-align: center;
 }
@@ -30,3 +34,4 @@
     transform: rotate(360deg);
   }
 }
+
