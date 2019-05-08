@@ -4,12 +4,16 @@ import Grid from "@material-ui/core/Grid";
 import HttpService from '../services/http-service';
 import Rushie from './Rushie';
 import Button from "@material-ui/core/Button";
+import AddRushie from "./AddRushie";
 
 const http = new HttpService();
 
 const styles = theme => ({
     root: {
-
+        padding: 24,
+    },
+    rushcard: {
+        padding: 24,
     }
 });
 
@@ -21,6 +25,7 @@ class RushieList extends Component {
 
         this.loadData = this.loadData.bind(this);
         this.rushieList = this.rushieList.bind(this);
+        this.addRushie = this.addRushie.bind(this);
 
         this.loadData();
     }
@@ -29,18 +34,20 @@ class RushieList extends Component {
         const { classes } = this.props;
 
         return (
-            <Grid container justify="center" spacing={24}>
+            <Grid className={classes.root} container justify="center" spacing={24}>
                 {this.rushieList()}
                 <Grid item xs={12}>
                   <Grid container justify="center" spacing={24}>
-                      <Button variant="contained" color="primary" size="large" onClick={() => this.props.onButtonClicked()}>
-                          Add Rushie
-                      </Button>
+                    <AddRushie/>
                   </Grid>
                 </Grid>
             </Grid>
 
         );
+    }
+
+    addRushie = () => {
+
     }
 
     loadData = () => {
@@ -54,7 +61,7 @@ class RushieList extends Component {
 
     rushieList = () => {
             const list = this.state.rushies.map((rushieJson) =>
-                <Grid key={rushieJson._id}>
+                <Grid className={this.props.rushcard} key={rushieJson._id}>
                     <Rushie rushie={rushieJson}/>
                 </Grid>
             );
