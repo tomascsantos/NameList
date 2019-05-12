@@ -3,7 +3,6 @@ import { withStyles} from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
 import HttpService from '../services/http-service';
 import Rushie from './Rushie';
-import Button from "@material-ui/core/Button";
 import AddRushie from "./AddRushie";
 
 const http = new HttpService();
@@ -38,7 +37,7 @@ class RushieList extends Component {
                 {this.rushieList()}
                 <Grid item xs={12}>
                   <Grid container justify="center" spacing={24}>
-                    <AddRushie/>
+                    <AddRushie childProps={this.props.childProps}/>
                   </Grid>
                 </Grid>
             </Grid>
