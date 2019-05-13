@@ -1,0 +1,5 @@
+{
+    "tableName": "applicants",
+    "partitionKeyName": "userId",
+    "partitionKeyType": "S"
+}

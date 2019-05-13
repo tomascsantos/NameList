@@ -14,15 +14,15 @@
         },
     
     
-          "functionmembersName": {
+          "functionnamelistName": {
             "Type": "String",
-            "Default": "functionmembersName"
+            "Default": "functionnamelistName"
           },
         
           
-          "functionmembersArn": {
+          "functionnamelistArn": {
             "Type": "String",
-            "Default": "functionmembersArn"
+            "Default": "functionnamelistArn"
           }
         
           
@@ -41,13 +41,13 @@
     },
     "Resources": {
         
-        "PolicyAPIGWmembersauth": {
+        "PolicyAPIGWnamelistAPIauth": {
             "DependsOn": [
-              "members"
+              "namelistAPI"
             ],
             "Type": "AWS::IAM::Policy",
             "Properties": {
-              "PolicyName": "PolicyAPIGWmembersauth",
+              "PolicyName": "PolicyAPIGWnamelistAPIauth",
               "Roles": [
                 {"Ref": "authRoleName"}
               ],
@@ -77,7 +77,7 @@
                             },
                             ":",
                             {
-                              "Ref": "members"
+                              "Ref": "namelistAPI"
                             },
                             "/",
                             {
@@ -90,7 +90,7 @@
                               ]
                             },
                               "/POST",
-                            "/members/*"
+                            "/applicants/*"
                           ]
                         ]
                       },
@@ -108,7 +108,7 @@
                             },
                             ":",
                             {
-                              "Ref": "members"
+                              "Ref": "namelistAPI"
                             },
                             "/",
                             {
@@ -121,7 +121,7 @@
                               ]
                             },
                               "/POST",
-                            "/members"
+                            "/applicants"
                           ]
                         ]
                       }
@@ -143,7 +143,7 @@
                             },
                             ":",
                             {
-                              "Ref": "members"
+                              "Ref": "namelistAPI"
                             },
                             "/",
                             {
@@ -156,7 +156,7 @@
                               ]
                             },
                               "/GET",
-                            "/members/*"
+                            "/applicants/*"
                           ]
                         ]
                       },
@@ -174,7 +174,7 @@
                             },
                             ":",
                             {
-                              "Ref": "members"
+                              "Ref": "namelistAPI"
                             },
                             "/",
                             {
@@ -187,7 +187,7 @@
                               ]
                             },
                               "/GET",
-                            "/members"
+                            "/applicants"
                           ]
                         ]
                       }
@@ -209,7 +209,7 @@
                             },
                             ":",
                             {
-                              "Ref": "members"
+                              "Ref": "namelistAPI"
                             },
                             "/",
                             {
@@ -222,7 +222,7 @@
                               ]
                             },
                               "/PUT",
-                            "/members/*"
+                            "/applicants/*"
                           ]
                         ]
                       },
@@ -240,7 +240,7 @@
                             },
                             ":",
                             {
-                              "Ref": "members"
+                              "Ref": "namelistAPI"
                             },
                             "/",
                             {
@@ -253,7 +253,7 @@
                               ]
                             },
                               "/PUT",
-                            "/members"
+                            "/applicants"
                           ]
                         ]
                       }
@@ -275,7 +275,7 @@
                             },
                             ":",
                             {
-                              "Ref": "members"
+                              "Ref": "namelistAPI"
                             },
                             "/",
                             {
@@ -288,7 +288,7 @@
                               ]
                             },
                               "/PATCH",
-                            "/members/*"
+                            "/applicants/*"
                           ]
                         ]
                       },
@@ -306,7 +306,7 @@
                             },
                             ":",
                             {
-                              "Ref": "members"
+                              "Ref": "namelistAPI"
                             },
                             "/",
                             {
@@ -319,7 +319,7 @@
                               ]
                             },
                               "/PATCH",
-                            "/members"
+                            "/applicants"
                           ]
                         ]
                       }
@@ -341,7 +341,7 @@
                             },
                             ":",
                             {
-                              "Ref": "members"
+                              "Ref": "namelistAPI"
                             },
                             "/",
                             {
@@ -354,7 +354,7 @@
                               ]
                             },
                               "/DELETE",
-                            "/members/*"
+                            "/applicants/*"
                           ]
                         ]
                       },
@@ -372,7 +372,7 @@
                             },
                             ":",
                             {
-                              "Ref": "members"
+                              "Ref": "namelistAPI"
                             },
                             "/",
                             {
@@ -385,7 +385,7 @@
                               ]
                             },
                               "/DELETE",
-                            "/members"
+                            "/applicants"
                           ]
                         ]
                       }
@@ -402,16 +402,16 @@
           },
         
         
-      "members": {
+      "namelistAPI": {
         "Type": "AWS::ApiGateway::RestApi",
         "Properties": {
           "Description": "",
-          "Name": "members",
+          "Name": "namelistAPI",
           "Body": {
             "swagger": "2.0",
             "info": {
               "version": "2018-05-24T17:52:00Z",
-              "title": "members"
+              "title": "namelistAPI"
             },
             "host": {
                 "Fn::Join": [
@@ -447,7 +447,7 @@
             ],
             "paths": {
               
-              "/members": {
+              "/applicants": {
                 "options": {
                   "consumes": [
                     "application/json"
@@ -539,7 +539,7 @@
                             
                             {
                                 
-                                "Ref": "functionmembersArn"
+                                "Ref": "functionnamelistArn"
                             },
                             
                             "/invocations"
@@ -552,7 +552,7 @@
                   }
                 }
               },
-              "/members/{proxy+}": {
+              "/applicants/{proxy+}": {
                 "options": {
                   "consumes": [
                     "application/json"
@@ -644,7 +644,7 @@
                           
                           {
                             
-                            "Ref": "functionmembersArn"
+                            "Ref": "functionnamelistArn"
                           },
                           
                           "/invocations"
@@ -701,12 +701,12 @@
                   
         
         
-        "functionmembersPermissionmembers": {
+        "functionnamelistPermissionnamelistAPI": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
                 "FunctionName": 
                     {
-                        "Ref":  "functionmembersName"
+                        "Ref":  "functionnamelistName"
                     },
                     
                     "Action": "lambda:InvokeFunction",
@@ -725,7 +725,7 @@
                             },
                             ":",
                             {
-                                "Ref": "members"
+                                "Ref": "namelistAPI"
                             },
                             "/*/*/*"
                         ]
@@ -736,7 +736,7 @@
         
         
         
-      "DeploymentAPIGWmembers": {
+      "DeploymentAPIGWnamelistAPI": {
         "Type": "AWS::ApiGateway::Deployment",
         "Properties": {
           "Description": "The Development stage deployment of your API.",
@@ -750,7 +750,7 @@
             ]
           },
           "RestApiId": {
-            "Ref": "members"
+            "Ref": "namelistAPI"
           }
         }
       }
@@ -758,11 +758,11 @@
     "Outputs": {
         "RootUrl": {
             "Description": "Root URL of the API gateway",
-            "Value": {"Fn::Join": ["", ["https://", {"Ref": "members"}, ".execute-api.", {"Ref": "AWS::Region"}, ".amazonaws.com/", {"Fn::If": ["ShouldNotCreateEnvResources","Prod", {"Ref": "env"} ]}]]}
+            "Value": {"Fn::Join": ["", ["https://", {"Ref": "namelistAPI"}, ".execute-api.", {"Ref": "AWS::Region"}, ".amazonaws.com/", {"Fn::If": ["ShouldNotCreateEnvResources","Prod", {"Ref": "env"} ]}]]}
         },
         "ApiName": {
           "Description": "API Friendly name",
-          "Value": "members"
+          "Value": "namelistAPI"
         }
     }
   }

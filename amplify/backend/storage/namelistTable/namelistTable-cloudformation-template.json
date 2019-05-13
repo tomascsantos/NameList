@@ -33,7 +33,7 @@
                 "AttributeDefinitions": [
                   
                   {
-                      "AttributeName": "member",
+                      "AttributeName": "userId",
                       "AttributeType": "S"
                   } 
                   
@@ -41,7 +41,7 @@
                 "KeySchema": [
                   
                   {
-                    "AttributeName": "member",
+                    "AttributeName": "userId",
                     "KeyType": "HASH"
                   } 
                   

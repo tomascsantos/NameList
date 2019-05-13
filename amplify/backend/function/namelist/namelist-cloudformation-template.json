@@ -5,13 +5,13 @@
 		"env": {
 			"Type": "String"
 		},
-		"storagenamelistmembersName": {
+		"storagenamelistTableName": {
 			"Type": "String",
-			"Default": "storagenamelistmembersName"
+			"Default": "storagenamelistTableName"
 		},
-		"storagenamelistmembersArn": {
+		"storagenamelistTableArn": {
 			"Type": "String",
-			"Default": "storagenamelistmembersArn"
+			"Default": "storagenamelistTableArn"
 		}
 	},
 	"Conditions": {
@@ -36,12 +36,12 @@
 				"FunctionName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"member",
+						"manageApplicants",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"member",
+									"manageApplicants",
 									"-",
 									{
 										"Ref": "env"
@@ -67,8 +67,8 @@
 				"Runtime": "nodejs8.10",
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "namelistweb-dev-20190512173117-deployment",
-					"S3Key": "amplify-builds/members-1557709364-latest-build.zip"
+					"S3Bucket": "namelist-dev-20190513112813-deployment",
+					"S3Key": "amplify-builds/namelist-1557773907-latest-build.zip"
 				}
 			}
 		},
@@ -78,12 +78,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"namelistwebLambdaRole2a5f427a",
+						"namelistLambdaRole960cb6c6",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"namelistwebLambdaRole2a5f427a",
+									"namelistLambdaRole960cb6c6",
 									"-",
 									{
 										"Ref": "env"
@@ -162,7 +162,7 @@
 							],
 							"Resource": [
 								{
-									"Ref": "storagenamelistmembersArn"
+									"Ref": "storagenamelistTableArn"
 								}
 							]
 						}

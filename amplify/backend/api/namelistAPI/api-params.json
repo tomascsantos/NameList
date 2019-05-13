@@ -1,8 +1,8 @@
 {
     "paths": [
         {
-            "name": "/members",
-            "lambdaFunction": "members",
+            "name": "/applicants",
+            "lambdaFunction": "namelist",
             "privacy": {
                 "private": true,
                 "auth": [
@@ -15,23 +15,23 @@
             }
         }
     ],
-    "resourceName": "members",
-    "apiName": "members",
+    "resourceName": "namelistAPI",
+    "apiName": "namelistAPI",
     "functionArns": [
         {
-            "lambdaFunction": "members"
+            "lambdaFunction": "namelist"
         }
     ],
     "privacy": {
         "auth": 1,
         "unauth": 0,
-        "authRoleName": "namelistweb-dev-20190512173117-authRole",
-        "unAuthRoleName": "namelistweb-dev-20190512173117-unauthRole"
+        "authRoleName": "namelist-dev-20190513112813-authRole",
+        "unAuthRoleName": "namelist-dev-20190513112813-unauthRole"
     },
     "dependsOn": [
         {
             "category": "function",
-            "resourceName": "members",
+            "resourceName": "namelist",
             "attributes": [
                 "Name",
                 "Arn"

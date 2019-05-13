@@ -1,29 +1,19 @@
 {
 	"auth": {
-		"cognito4351230f": {
+		"namelistAuth": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation"
 		}
 	},
-	"storage": {
-		"namelistmembers": {
-			"service": "DynamoDB",
-			"providerPlugin": "awscloudformation"
-		},
-		"memberphotos": {
-			"service": "S3",
-			"providerPlugin": "awscloudformation"
-		}
-	},
 	"function": {
-		"members": {
+		"namelist": {
 			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
 			"build": true,
 			"dependsOn": [
 				{
 					"category": "storage",
-					"resourceName": "namelistmembers",
+					"resourceName": "namelistTable",
 					"attributes": [
 						"Name",
 						"Arn"
@@ -33,19 +23,25 @@
 		}
 	},
 	"api": {
-		"members": {
+		"namelistAPI": {
 			"service": "API Gateway",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": [
 				{
 					"category": "function",
-					"resourceName": "members",
+					"resourceName": "namelist",
 					"attributes": [
 						"Name",
 						"Arn"
 					]
 				}
 			]
+		}
+	},
+	"storage": {
+		"namelistTable": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
 		}
 	}
 }

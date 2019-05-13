@@ -8,7 +8,7 @@ import DialogActions from "@material-ui/core/es/DialogActions/DialogActions";
 import Attribute from "./Attribute";
 import MenuItem from "@material-ui/core/MenuItem";
 import {DropzoneArea} from "material-ui-dropzone";
-import Amplify, {API} from "aws-amplify";
+import Amplify, {API, Auth} from "aws-amplify";
 import {s3Upload} from "../libs/awsLibs";
 import awsconfig from "../aws-exports";
 
@@ -64,7 +64,6 @@ class AddRushie extends Component {
     };
 
     handleChange = name => event => {
-        console.log("name is: ", name, "event is:", event);
         this.setState({
             [name]: event.target.value
         });
@@ -85,18 +84,8 @@ class AddRushie extends Component {
             ? await s3Upload(this.file)
             : null
 
-            await AddRushie.createMember({
-                attachment,
-                content: [
-                    this.state.name,
-                    this.state.intelligence,
-                    this.state.looks,
-                    this.state.social,
-                    this.state.contact,
-                    this.state.year
-                ]
-
-            });
+            console.log(Auth.currentUserInfo())
+            await AddRushie.createMember();
             this.setState({open: false})
         } catch (e) {
             alert(e);
@@ -104,13 +93,16 @@ class AddRushie extends Component {
         }
     };
 
-    static createMember(member) {
+    static createMember(userid) {
         //TODO change to name that makes sense.
-        return API.post("members", "", {
+        return API.post("namelist", "/members", {
             headers: {
-                "Access-Control-Allow-Origin": "*"
             },
-            body: member
+            body: {
+                content: "this is the content"
+            }
+        }).catch(er => {
+            console.log("Our error: ", er)
         })
     }
 
