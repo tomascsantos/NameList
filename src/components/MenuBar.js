@@ -48,7 +48,7 @@ class MenuBar extends Component {
                         <Typography variant="h6" color="inherit" className={classes.grow}>
                             Name List
                         </Typography>
-
+                        {/*
                         {this.props.childProps.isAuthenticated
                             ?<Button onClick={this.handleLogout}>Logout</Button>
                             : <Fragment>
@@ -56,6 +56,7 @@ class MenuBar extends Component {
                                 <Button component={ RouterLink } to={"/signup"} color="inherit">Sign Up</Button>
                               </Fragment>
                         }
+                        */}
                     </Toolbar>
                 </AppBar>
             </div>

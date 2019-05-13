@@ -37,7 +37,7 @@ class RushieList extends Component {
                 {this.rushieList()}
                 <Grid item xs={12}>
                   <Grid container justify="center" spacing={24}>
-                    <AddRushie childProps={this.props.childProps}/>
+                    <AddRushie/>
                   </Grid>
                 </Grid>
             </Grid>

@@ -8,8 +8,11 @@ import DialogActions from "@material-ui/core/es/DialogActions/DialogActions";
 import Attribute from "./Attribute";
 import MenuItem from "@material-ui/core/MenuItem";
 import {DropzoneArea} from "material-ui-dropzone";
-import {API} from "aws-amplify";
+import Amplify, {API} from "aws-amplify";
 import {s3Upload} from "../libs/awsLibs";
+import awsconfig from "../aws-exports";
+
+Amplify.configure(awsconfig);
 
 const styles = theme => ({
     root: {
@@ -103,7 +106,10 @@ class AddRushie extends Component {
 
     static createMember(member) {
         //TODO change to name that makes sense.
-        return API.post("notes", "/notes", {
+        return API.post("members", "", {
+            headers: {
+                "Access-Control-Allow-Origin": "*"
+            },
             body: member
         })
     }
