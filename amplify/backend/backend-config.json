@@ -42,6 +42,10 @@
 		"namelistTable": {
 			"service": "DynamoDB",
 			"providerPlugin": "awscloudformation"
+		},
+		"namelistPhotos": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
 		}
 	}
 }

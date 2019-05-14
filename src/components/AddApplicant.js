@@ -11,6 +11,7 @@ import {DropzoneArea} from "material-ui-dropzone";
 import Amplify, {API, Auth} from "aws-amplify";
 import {s3Upload} from "../libs/awsLibs";
 import awsconfig from "../aws-exports";
+import jwtDecode from "jwt-decode";
 
 Amplify.configure(awsconfig);
 
@@ -35,7 +36,7 @@ const styles = theme => ({
     }
 });
 
-class AddRushie extends Component {
+class AddApplicant extends Component {
     constructor(props) {
         super(props);
 
@@ -84,22 +85,42 @@ class AddRushie extends Component {
             ? await s3Upload(this.file)
             : null
 
-            console.log(Auth.currentUserInfo())
-            await AddRushie.createMember();
-            this.setState({open: false})
+            const group = await Auth.currentSession().then((session) => {
+                var sessionIdInfo = jwtDecode(session.getIdToken().jwtToken);
+                return sessionIdInfo["cognito:groups"][0];
+            });
+            await this.createMember(group);
+            this.setState({
+                isLoading: null,
+                open: false,
+                name: "",
+                intelligence: "",
+                looks: "",
+                social: "",
+                contact: "",
+                year: "",
+            })
         } catch (e) {
             alert(e);
             this.setState({isLoading: false});
         }
     };
 
-    static createMember(userid) {
+     createMember(groupId) {
         //TODO change to name that makes sense.
-        return API.post("namelist", "/members", {
+        return API.post("namelistAPI", "/applicants", {
             headers: {
             },
             body: {
-                content: "this is the content"
+                "userId": this.state.name,
+                "content": "test",
+                "name": this.state.name,
+                "groupId": groupId,
+                "intelligence": this.state.intelligence,
+                "looks": this.state.looks,
+                "social": this.state.social,
+                "contact": this.state.contact,
+                "year": this.state.year,
             }
         }).catch(er => {
             console.log("Our error: ", er)
@@ -222,4 +243,4 @@ class AddRushie extends Component {
     }
 }
 
-export default withStyles(styles)(AddRushie);
+export default withStyles(styles)(AddApplicant);

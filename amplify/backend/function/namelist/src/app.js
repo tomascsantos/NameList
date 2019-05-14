@@ -14,7 +14,7 @@ AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-let tableName = "namelistTable";
+let tableName = "applicants";
 if(process.env.ENV && process.env.ENV !== "NONE") {
   tableName = tableName + '-' + process.env.ENV;
 }
@@ -171,6 +171,7 @@ app.post(path, function(req, res) {
     TableName: tableName,
     Item: req.body
   }
+  console.log("put Item params: ", putItemParams)
   dynamodb.put(putItemParams, (err, data) => {
     if(err) {
       res.statusCode = 500;

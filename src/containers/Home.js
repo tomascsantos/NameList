@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import RushieList from "../components/RushieList";
+import ApplicantList from "../components/ApplicantList";
 import Grid from "@material-ui/core/Grid";
 import "./Home.css";
 
@@ -11,7 +11,7 @@ export default class Home extends Component {
                     <h1>The Rushies:</h1>
                     <Grid container spacing={24}>
                         <Grid item xs={12}>
-                            <RushieList/>
+                            <ApplicantList/>
                         </Grid>
                     </Grid>
                 </div>
