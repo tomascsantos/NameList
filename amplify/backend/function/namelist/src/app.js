@@ -77,14 +77,20 @@ app.get(path + hashKeyPath, function(req, res) {
     TableName: tableName,
     KeyConditions: condition
   } 
+  const payload = {
+    TableName: tableName,
+    Limit: 100,
+    Select: 'ALL_Attributes',
+    FilterExpression: "ADDLodge = :groupId",
+  }
 
-  dynamodb.query(queryParams, (err, data) => {
-    if (err) {
-      res.statusCode = 500;
-      res.json({error: 'Could not load items: ' + err});
-    } else {
-      res.json(data.Items);
-    }
+  dynamo.scan(payload, (err, data) => {
+        const result = { data: data.Items.map(item =>{
+            return item;
+        }) };
+        callback(err, result.data);
+  });
+
   });
 });
 
