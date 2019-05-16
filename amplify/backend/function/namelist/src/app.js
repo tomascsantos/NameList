@@ -55,7 +55,7 @@ const convertUrlType = (param, type) => {
  * HTTP Get method for list objects *
  ********************************/
 
-app.get(path + hashKeyPath, function(req, res) {
+app.get(path, function(req, res) {
   console.log("WE GET TO app get for list")
   var condition = {}
   condition[partitionKeyName] = {
@@ -73,10 +73,22 @@ app.get(path + hashKeyPath, function(req, res) {
     }
   }
 
+  /*
   let queryParams = {
     TableName: tableName,
     KeyConditions: condition
   } 
+
+  dynamodb.query(queryParams, (err, data) => {
+    if (err) {
+      res.statusCode = 500;
+      res.json({error: 'Could not load items: ' + err});
+    } else {
+      res.json(data.Items);
+    }
+  });
+  */
+
   const payload = {
     TableName: tableName,
     Limit: 100,
@@ -84,13 +96,12 @@ app.get(path + hashKeyPath, function(req, res) {
     FilterExpression: "ADDLodge = :groupId",
   }
 
-  dynamo.scan(payload, (err, data) => {
-        const result = { data: data.Items.map(item =>{
-            return item;
-        }) };
-        callback(err, result.data);
-  });
-
+  dynamodb.scan(payload, (err, data) => {
+      if (err) {
+          res.json({error: "could not load items: ", err})
+      } else {
+          res.json(data.Items);
+      }
   });
 });
 

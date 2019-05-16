@@ -67,7 +67,7 @@ class ApplicantList extends Component {
 
     async loadApplicants() {
         try {
-            const applicants = await API.get("namelistAPI", "/applicants/asdf", {});
+            const applicants = await API.get("namelistAPI", "/applicants", {});
             console.log("applicants are: ", applicants);
         } catch (e) {
             console.log("Our error", e.response);
