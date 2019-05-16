@@ -92,9 +92,11 @@ app.get(path, function(req, res) {
   const payload = {
     TableName: tableName,
     Limit: 100,
-    Select: 'ALL_Attributes',
-    FilterExpression: "ADDLodge = :groupId",
-  }
+    Select: 'ALL_ATTRIBUTES',
+    FilterExpression: "#name0 = :value0",
+    ExpressionAttributeNames : { "#name0":  "groupId"},
+    ExpressionAttributeValues: {":value0": "ADDLodge"},
+  };
 
   dynamodb.scan(payload, (err, data) => {
       if (err) {
