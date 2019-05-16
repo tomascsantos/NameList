@@ -44,8 +44,24 @@ class Applicant extends Component {
                     />
                 <CardContent>
                     <ApplicantStat
+                        type={"string"}
+                        stat={"year"}
+                        value={this.props.applicant.year}
+                        textSize={"h3"}
+                    />
+                    <ApplicantStat
                         type={"scale"}
                         stat={"Intelligence"}
+                        value={this.props.applicant.intelligence}
+                    />
+                    <ApplicantStat
+                        type={"scale"}
+                        stat={"Looks"}
+                        value={this.props.applicant.intelligence}
+                    />
+                    <ApplicantStat
+                        type={"scale"}
+                        stat={"Social"}
                         value={this.props.applicant.intelligence}
                     />
                 </CardContent>

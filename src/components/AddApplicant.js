@@ -50,6 +50,7 @@ class AddApplicant extends Component {
             social: "",
             contact: "",
             year: "",
+            bids: "",
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -121,6 +122,7 @@ class AddApplicant extends Component {
                 "social": this.state.social,
                 "contact": this.state.contact,
                 "year": this.state.year,
+                "bids": this.state.bids,
             }
         }).catch(er => {
             console.log("Our error: ", er)

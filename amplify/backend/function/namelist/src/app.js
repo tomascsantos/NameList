@@ -56,6 +56,7 @@ const convertUrlType = (param, type) => {
  ********************************/
 
 app.get(path + hashKeyPath, function(req, res) {
+  console.log("WE GET TO app get for list")
   var condition = {}
   condition[partitionKeyName] = {
     ComparisonOperator: 'EQ'
@@ -92,6 +93,7 @@ app.get(path + hashKeyPath, function(req, res) {
  *****************************************/
 
 app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
+  console.log("WE GET TO app get for singleItem")
   var params = {};
   if (userIdPresent && req.apiGateway) {
     params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;

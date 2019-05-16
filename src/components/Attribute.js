@@ -29,6 +29,14 @@ class Attribute extends Component {
         return arr
     }
 
+    //https://scriptverse.academy/tutorials/reactjs-multicolor-progressbar.html
+    generateCheckbox() {
+        const class_name = this.props.name + "_class";
+        return (
+            <TextField/>
+        )
+    };
+
     //Return this if the type is string
     generateString() {
         const class_name = this.props.name + "_class";

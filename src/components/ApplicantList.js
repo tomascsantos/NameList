@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import { withStyles} from "@material-ui/styles";
 import Grid from "@material-ui/core/Grid";
-import HttpService from '../services/http-service';
 import Applicant from './Applicant';
 import AddApplicant from "./AddApplicant";
+import Amplify, {API} from "aws-amplify";
+import awsconfig from "../aws-exports";
+
+Amplify.configure(awsconfig);
 
 const styles = theme => ({
     root: {
@@ -18,12 +21,16 @@ class ApplicantList extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {rushies:[]};
+        this.state = {
+            isLoading: true,
+            applicants:[]
+        };
     }
 
     render() {
         const { classes } = this.props;
-
+        console.log("load applicants");
+        this.loadApplicants();
         return (
             <Grid className={classes.root} container justify="center" spacing={24}>
                 {this.rushieList()}
@@ -57,6 +64,15 @@ class ApplicantList extends Component {
             //);
                 )
     };
+
+    async loadApplicants() {
+        try {
+            const applicants = await API.get("namelistAPI", "/applicants");
+            console.log("applicants are: ", applicants);
+        } catch (e) {
+            console.log("Our error", e.response);
+        }
+    }
 
 
 }
