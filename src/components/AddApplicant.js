@@ -6,7 +6,6 @@ import DialogTitle from "@material-ui/core/es/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/es/DialogContent/DialogContent";
 import DialogActions from "@material-ui/core/es/DialogActions/DialogActions";
 import Attribute from "./Attribute";
-import MenuItem from "@material-ui/core/MenuItem";
 import {DropzoneArea} from "material-ui-dropzone";
 import Amplify, {API, Auth} from "aws-amplify";
 import {s3Upload} from "../libs/awsLibs";
@@ -72,7 +71,6 @@ class AddApplicant extends Component {
     };
 
     handleFileChange = event => {
-        console.log("file cahnge event: ", event)
         this.file = event[0];
     };
 
@@ -84,13 +82,14 @@ class AddApplicant extends Component {
         try {
             const attachment = this.file
             ? await s3Upload(this.file)
-            : null
+            : null;
 
-            const group = await Auth.currentSession().then((session) => {
-                var sessionIdInfo = jwtDecode(session.getIdToken().jwtToken);
-                return sessionIdInfo["cognito:groups"][0];
+            const sessionIdInfo = await Auth.currentSession().then((session) => {
+                return jwtDecode(session.getIdToken().jwtToken);
             });
-            await this.createMember(group);
+            let group = sessionIdInfo["cognito:groups"][0];
+            let userId = sessionIdInfo["cognito:username"];
+            await this.createMember(group, userId, attachment);
             this.setState({
                 isLoading: null,
                 open: false,
@@ -100,21 +99,28 @@ class AddApplicant extends Component {
                 social: "",
                 contact: "",
                 year: "",
-            })
+                bids: "",
+            });
+            this.file = null;
         } catch (e) {
             alert(e);
-            this.setState({isLoading: false});
         }
+        this.setState({isLoading: false});
+        this.props.reload();
     };
 
-     createMember(groupId) {
+     createMember(groupId, userId, photo) {
         //TODO change to name that makes sense.
+        let uniqueId = this.state.name + "-" + userId;
+
+        let original = true;
+
+        console.log("is original? ", original)
         return API.post("namelistAPI", "/applicants", {
             headers: {
             },
             body: {
-                "userId": this.state.name,
-                "content": "test",
+                "userId": uniqueId,
                 "name": this.state.name,
                 "groupId": groupId,
                 "intelligence": this.state.intelligence,
@@ -123,6 +129,9 @@ class AddApplicant extends Component {
                 "contact": this.state.contact,
                 "year": this.state.year,
                 "bids": this.state.bids,
+                "contactId": userId,
+                "image": photo,
+                "original": original,
             }
         }).catch(er => {
             console.log("Our error: ", er)
@@ -130,16 +139,15 @@ class AddApplicant extends Component {
     }
 
     validForm() {
-        return this.state.name && this.state.contact
+        return this.state.name &&
+            this.state.contact &&
+            this.state.intelligence &&
+            this.state.looks &&
+            this.state.social &&
+            this.state.year &&
+            this.file
     }
 
-    buildSelect()  {
-        var arr = [];
-        for (var i = 1; i <= 10; i++) {
-            arr.push(<MenuItem key={i} value={i}>{i}</MenuItem>)
-        }
-        return arr
-    }
     checkState() {
         console.log(this.state)
     }
@@ -148,7 +156,7 @@ class AddApplicant extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
-                <Button onClick={this.handleOpen}>Add Rushie </Button>
+                <Button onClick={this.handleOpen} variant={"contained"} color={"primary"}>Add Rushie </Button>
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
@@ -158,17 +166,17 @@ class AddApplicant extends Component {
                     <DialogTitle id="form-dialogue-title"> Add New Rushie </DialogTitle>
                     <DialogContent>
                         <Attribute
-                            name={"contact"}
-                            value={this.state.contact}
-                            handleChange={this.handleChange("contact")}
-                            label={"Your Name (You are his contact!)"}
-                            type={"string"}
-                        />
-                        <Attribute
                             name={"name"}
                             value={this.state.name}
                             handleChange={this.handleChange("name")}
                             label={"Rushie Name"}
+                            type={"string"}
+                        />
+                        <Attribute
+                            name={"contact"}
+                            value={this.state.contact}
+                            handleChange={this.handleChange("contact")}
+                            label={"Your Name (You are his contact!)"}
                             type={"string"}
                         />
                         <Attribute
@@ -193,6 +201,29 @@ class AddApplicant extends Component {
                             type={"scale"}
                         />
                         <Attribute
+                            name={"bids"}
+                            value={this.state.bids}
+                            handleChange={this.handleChange("bids")}
+                            label={"Would you bid?"}
+                            type={"menu"}
+                            selectors={
+                                [
+                                    {
+                                        value: 1,
+                                        label: "Yes"
+                                    },
+                                    {
+                                        value: 0,
+                                        label: "Not Sure"
+                                    },
+                                    {
+                                        value: -1,
+                                        label: "No"
+                                    }
+                                ]
+                            }
+                        />
+                        <Attribute
                             name={"year"}
                             value={this.state.year}
                             handleChange={this.handleChange("year")}
@@ -201,19 +232,19 @@ class AddApplicant extends Component {
                             selectors={
                                 [
                                     {
-                                        value: 'freshman',
+                                        value: 'Freshman',
                                         label: 'Freshman',
                                     },
                                     {
-                                        value: 'sophomore',
+                                        value: 'Sophomore',
                                         label: 'Sophomore',
                                     },
                                     {
-                                        value: 'junior',
+                                        value: 'Junior',
                                         label: 'Junior',
                                     },
                                     {
-                                        value: 'senior',
+                                        value: 'Senior',
                                         label: 'Senior',
                                     },
                                 ]
@@ -225,13 +256,12 @@ class AddApplicant extends Component {
                             onChange={this.handleFileChange}
                             filesLimit={1}
                         />
-                        <Button onClick={this.checkState}>Check state</Button>
                     </DialogContent>
                     <DialogActions>
                         <Button
                             onClick={this.handleSubmit}
                             color="primary"
-                            disabled={!this.validForm()}
+                            //disabled={!this.validForm()}
                         >
                             Submit
                         </Button>

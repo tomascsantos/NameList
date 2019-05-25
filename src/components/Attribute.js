@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import { withStyles} from "@material-ui/styles";
 import {TextField} from "@material-ui/core";
 import MenuItem from "@material-ui/core/es/MenuItem/MenuItem";
-
+import ReactSelectMaterialUi from "react-select-material-ui";
+import AutoCompleteField from "./AutoCompleteField";
 const styles = theme => ({
     root: {
 
@@ -103,6 +104,21 @@ class Attribute extends Component {
         )
     }
 
+    generateSearch() {
+        return(
+            <AutoCompleteField
+                options={this.props.options.map(a => (
+                    {
+                        value: a,
+                        label: a,
+                    }
+                ))}
+                value={this.props.value}
+                handleChange={this.props.handleChange}
+                label={this.props.label}
+            />
+        )
+    }
 
     render() {
         switch(this.props.type) {
@@ -110,6 +126,8 @@ class Attribute extends Component {
                 return this.generateString();
             case "scale":
                 return this.generateScale();
+            case "search":
+                return this.generateSearch();
             case "menu":
                 return this.generateMenu();
             default:

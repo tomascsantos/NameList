@@ -31,7 +31,7 @@ class ApplicantStat extends Component {
 
     renderString(textSize) {
         return (
-            <Typography component={"h1"}>
+            <Typography variant={"h5"}>
                 {this.props.value}
             </Typography>
         )

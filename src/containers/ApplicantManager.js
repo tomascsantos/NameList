@@ -3,7 +3,13 @@ import ApplicantList from "../components/ApplicantList";
 import Grid from "@material-ui/core/Grid";
 import "./Home.css";
 
-export default class Home extends Component {
+export default class ApplicantManager extends Component {
+    constructor(props) {
+        super(props);
+
+
+    }
+
      render() {
         return(
             <div className={"lander"}>
