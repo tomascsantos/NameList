@@ -1,5 +1,5 @@
 ### Namelist App
-I originally created this app for a purpose identical to [ChapterBuilder](https://chapterbuilder.com/) but for my own professional enviornmental fraternity [Epsilon Eta](https://epsilonetaucberkeley.com/). I abandoned project development once I realized there was a far more complete version available, but not before I the basics working!
+I originally created this app for a purpose identical to [ChapterBuilder](https://chapterbuilder.com/) but for my own professional enviornmental fraternity [Epsilon Eta](https://epsilonetaucberkeley.com/). I abandoned project development once I realized there was a far more complete version available, but not before successfully implementing a serverless CRUD app with AWS amplify.
 
 ### Features:
 - Serverless implementation using [AWS amplify](https://aws-amplify.github.io/) for essentially infinite scalability
